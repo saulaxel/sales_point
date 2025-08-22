@@ -1,3 +1,5 @@
+local_notes.txt
+myenv
 __pycache__/
 *.py[codz]
 *$py.class
