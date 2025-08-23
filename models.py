@@ -5,12 +5,18 @@ from peewee import (
 )
 from types import SimpleNamespace
 
+from os import path
+
 def get_user_models(username):
 
     assert username.isalnum() # No weird chars, no '/', etc should have passed
                               # validation
 
-    db = SqliteDatabase(f'db/{username}.db')
+    filename = path.basename(f'{username}.db')
+    directory = path.abspath(path.dirname(__file__))
+    absolute_path = path.join(directory, 'db', filename)
+
+    db = SqliteDatabase(absolute_path)
     models = SimpleNamespace()
 
     class UnknownField(object):

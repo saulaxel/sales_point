@@ -3,6 +3,7 @@
 
 from flask import Flask
 from jinja2 import Environment, FileSystemLoader
+from os import path
 
 from models import get_user_models
 import db_constants as dbc
@@ -15,7 +16,8 @@ existence = {
 
 app = Flask(__name__)
 userdb = get_user_models('exampleuser')
-jenv = Environment(loader=FileSystemLoader('templates/'))
+template_dir = path.join(path.abspath(path.dirname(__file__)), 'templates')
+jenv = Environment(loader=FileSystemLoader(template_dir))
 
 @app.route('/')
 def main():
