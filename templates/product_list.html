@@ -1,34 +1,62 @@
-<table border="1">
-    <thead>
-        <tr>
-            {% for column in headers %}
-                <th>{{ column }}</th>
-            {% endfor %}
+{% include "page_start.html" %}
 
-            <th>Modificar</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for fvariant in formatted_variants %}
+
+<section>
+    <button class="btn btn-primary">Nuevo Producto</button>
+    <button class="btn btn-primary">Eliminar producto(s)</button>
+</section>
+
+<section id="product_list">
+    Buscar producto:
+    <input id="filter_product_list" type="text"
+        class="form-control form-control-lg border-primary">
+
+    <table class="table table-sm table-primary table-striped">
+        <thead>
             <tr>
-                {% for key, val in fvariant.items() %}
-                    {% if key != 'existence' %}
-                        <td>{{ val }}</td>
-                    {% else %}
-                        {% if val == existence['plenty'] %}
-                            <td>Suficiente</td>
-                        {% elif val == existence['scarce'] %}
-                            <td>Escasa</td>
-                        {% elif val == existence['depleted'] %}
-                            <td>Agotada</td>
-                        {% else %}
-                            <td>Error! Existence unknown: {{ val }}</td>
-                        {% endif %}
-                    {% endif %}
+                {% for column in headers %}
+                    <th>{{ column }}</th>
                 {% endfor %}
 
-                <td><button type="button">Click</button></td>
+                <th>Modificar</th>
+                <th>Eliminar</th>
             </tr>
-        {% endfor %}
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            {% for fvariant in formatted_variants %}
+                <tr>
+                    {% for key, val in fvariant.items() %}
+                        {% if key != 'existence' %}
+                            <td>{{ val }}</td>
+                        {% else %}
+                            {% if val == existence['plenty'] %}
+                                <td>Suficiente</td>
+                            {% elif val == existence['scarce'] %}
+                                <td>Escasa</td>
+                            {% elif val == existence['depleted'] %}
+                                <td>Agotada</td>
+                            {% else %}
+                                <td>Error! Existence unknown: {{ val }}</td>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+
+                    <td>
+                        <button type="button"
+                                class="row-button btn btn-primary">
+                            Mod
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button"
+                                class="row-button btn btn-danger">
+                            Elim
+                        </button>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+
+{% include "page_end.html" %}

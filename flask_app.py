@@ -1,7 +1,7 @@
 
 # A very simple Flask Hello World app for you to get started with...
 
-from flask import Flask
+from flask import Flask, render_template
 from jinja2 import Environment, FileSystemLoader
 from os import path
 
@@ -16,8 +16,6 @@ existence = {
 
 app = Flask(__name__)
 userdb = get_user_models('exampleuser')
-template_dir = path.join(path.abspath(path.dirname(__file__)), 'templates')
-jenv = Environment(loader=FileSystemLoader(template_dir))
 
 @app.route('/')
 def main():
@@ -27,9 +25,7 @@ def main():
         .where(userdb.ProductVariant.package_content_id.is_null(True))
     )
 
-    template = jenv.get_template('product_list.html')
-    # Columns as the user will read them
-    headers = ('id', 'Producto', 'Precio', 'Existencias')
+    headers = ('Producto', 'Precio', 'Existencias')
     for variant in query:
 
         str_variant = f'{variant.product.name}'
@@ -44,7 +40,6 @@ def main():
             str_variant += f' {variant.tamano}'
 
         fvariant = {
-            'id': variant.id,
             'str_variant': str_variant,
             'price': f'${variant.price:.2f}',
             'existence': variant.existence.id
@@ -52,7 +47,8 @@ def main():
         formatted_variants.append(fvariant)
 
 
-    return template.render(headers=headers,
+    return render_template('product_list.html',
+                           headers=headers,
                            formatted_variants=formatted_variants,
                            existence=existence)
 
