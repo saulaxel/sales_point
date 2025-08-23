@@ -30,11 +30,23 @@
                             <td>{{ val }}</td>
                         {% else %}
                             {% if val == existence['plenty'] %}
-                                <td>Suficiente</td>
+                                <td>
+                                    <button type="button" class="btn btn-success row-button">
+                                        Suficiente
+                                    </button>
+                                </td>
                             {% elif val == existence['scarce'] %}
-                                <td>Escasa</td>
+                                <td>
+                                    <button type="button" class="btn btn-warning row-button">
+                                        Escasa
+                                    </button>
+                                </td>
                             {% elif val == existence['depleted'] %}
-                                <td>Agotada</td>
+                                <td>
+                                    <button type="button" class="btn btn-danger row-button">
+                                        Agotada
+                                    </button>
+                                </td>
                             {% else %}
                                 <td>Error! Existence unknown: {{ val }}</td>
                             {% endif %}

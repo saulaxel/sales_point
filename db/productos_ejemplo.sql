@@ -5,11 +5,13 @@ INSERT INTO product (id, name) VALUES (1, 'Cubo');
 INSERT INTO product_variant (
     id,
     product_id,
-    price
+    price,
+    existence_id
 ) VALUES (
     1,
     1,
-    20
+    20,
+    2
 );
 
 
@@ -23,15 +25,16 @@ INSERT INTO product_variant (
 
     brand,
     tamano,
-    price
+    price,
+    existence_id
 ) VALUES
-    (2, 2, 'prit', '10g', 10),
-    (3, 2, 'prit', '20g', 15),
-    (4, 2, 'prit', '30g', 20),
+    (2, 2, 'prit', '10g', 10, 1),
+    (3, 2, 'prit', '20g', 15, 2),
+    (4, 2, 'prit', '30g', 20, 3),
 
-    (5, 2, 'dixon', '10g', 10),
-    (6, 2, 'dixon', '20g', 15),
-    (7, 2, 'dixon', '30g', 20);
+    (5, 2, 'dixon', '10g', 10, 1),
+    (6, 2, 'dixon', '20g', 15, 2),
+    (7, 2, 'dixon', '30g', 20, 3);
 
 
 -- PRODUCT --
