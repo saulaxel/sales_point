@@ -18,7 +18,8 @@ CREATE TABLE presentation (
     is_individual BOOLEAN NOT NULL
     -- Since 'box is a presentation that contains multiple elements
     -- is_individual is FALSE,
-    -- 'piece' doesn't contain multiple elements, is_individual is TRUE
+    -- on the other hand 'piece' doesn't contain multiple elements so is_individual
+    -- is TRUE
 );
 
 INSERT INTO presentation (
@@ -26,6 +27,7 @@ INSERT INTO presentation (
 ) VALUES
     ('piece' , TRUE),
     ('sheet' , TRUE),
+    ('pliego', TRUE),
     ('bottle', TRUE),
     ('box'  , FALSE),
     ('bag'  , FALSE),
@@ -143,6 +145,7 @@ CREATE TABLE product_variant (
     -- almost all the columns of the table and yet I'm not sure that should be
     -- disallowed
     UNIQUE (product_id, brand, presentation_id, package_size, package_content_id, color, tamano)
+    -- Present order: brand, tamano, color, packaging
 );
 
 CREATE TRIGGER product_variant_prevent_duplicate_with_nulls
@@ -193,7 +196,7 @@ SELECT
     p.id product_id,
     p.name,
     pv.brand,
-    pv.presentation,
+    pv.presentation_id,
     pv.package_size,
     pv.color,
     pv.tamano,

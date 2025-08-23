@@ -1,6 +1,6 @@
 from peewee import (
     SqliteDatabase, Model,
-    TextField, IntegerField, DecimalField, ForeignKeyField,
+    TextField, IntegerField, DecimalField, ForeignKeyField, BooleanField,
     SQL
 )
 from types import SimpleNamespace
@@ -32,6 +32,31 @@ def get_user_models(username):
 
     models.Color = Color
 
+    class Counter(BaseModel):
+        name = TextField(null=True)
+
+        class Meta:
+            table_name = 'counter'
+
+    models.Counter = Counter
+
+    class Existence(BaseModel):
+        name = TextField(unique=True)
+
+        class Meta:
+            table_name = 'existence'
+
+    models.Existence = Existence
+
+    class Presentation(BaseModel):
+        is_individual = BooleanField()
+        name = TextField(unique=True)
+
+        class Meta:
+            table_name = 'presentation'
+
+    models.Presentation = Presentation
+
     class Product(BaseModel):
         name = TextField(unique=True)
 
@@ -40,27 +65,22 @@ def get_user_models(username):
 
     models.Product = Product
 
-    class ProductPackaging(BaseModel):
-        name = TextField(unique=True)
-
-        class Meta:
-            table_name = 'product_packaging'
-
-    models.ProductPackaging = ProductPackaging
-
     class ProductVariant(BaseModel):
         brand = TextField(constraints=[SQL("DEFAULT 'no_brand'")])
         color = IntegerField(constraints=[SQL("DEFAULT 'no_color'")])
+        existence = ForeignKeyField(column_name='existence_id', constraints=[SQL("DEFAULT 1")], field='id', model=Existence)
+        package_content_id = IntegerField(null=True)
+        package_is_top = BooleanField(constraints=[SQL("DEFAULT TRUE")])
         package_size = IntegerField(constraints=[SQL("DEFAULT 1")])
-        price = DecimalField()
+        presentation = ForeignKeyField(column_name='presentation_id', constraints=[SQL("DEFAULT 1")], field='id', model=Presentation)
+        price = DecimalField(null=True)
         product = ForeignKeyField(column_name='product_id', field='id', model=Product)
-        product_packaging = ForeignKeyField(column_name='product_packaging_id', constraints=[SQL("DEFAULT 1")], field='id', model=ProductPackaging)
         tamano = TextField(constraints=[SQL("DEFAULT 'no_tamano'")])
 
         class Meta:
             table_name = 'product_variant'
             indexes = (
-                (('product', 'brand', 'product_packaging', 'color', 'tamano'), True),
+                (('product', 'brand', 'presentation', 'package_size', 'package_content_id', 'color', 'tamano'), True),
             )
 
     models.ProductVariant = ProductVariant

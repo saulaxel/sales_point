@@ -1,0 +1,34 @@
+<table border="1">
+    <thead>
+        <tr>
+            {% for column in headers %}
+                <th>{{ column }}</th>
+            {% endfor %}
+
+            <th>Modificar</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for fvariant in formatted_variants %}
+            <tr>
+                {% for key, val in fvariant.items() %}
+                    {% if key != 'existence' %}
+                        <td>{{ val }}</td>
+                    {% else %}
+                        {% if val == existence['plenty'] %}
+                            <td>Suficiente</td>
+                        {% elif val == existence['scarce'] %}
+                            <td>Escasa</td>
+                        {% elif val == existence['depleted'] %}
+                            <td>Agotada</td>
+                        {% else %}
+                            <td>Error! Existence unknown: {{ val }}</td>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+
+                <td><button type="button">Click</button></td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
