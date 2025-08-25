@@ -35,6 +35,6 @@ self.addEventListener('fetch', (event) => {
         caches.match(event.request)
         .then(response => {
             return response || fetch(event.request); // Use cache first, then network
-        });
+        })
     );
 });
