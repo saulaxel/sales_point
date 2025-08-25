@@ -25,4 +25,4 @@ def update_existence(item_id):
 
     pv.save()
 
-    return str(pv.existence_id)
+    return str(pv.existence_id), 200

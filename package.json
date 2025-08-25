@@ -1,0 +1,22 @@
+{
+  "name": "sales_point",
+  "version": "1.0.0",
+  "description": "Small Sales Point",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saulaxel/sales_point.git"
+  },
+  "author": "saulaxel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/saulaxel/sales_point/issues"
+  },
+  "homepage": "https://github.com/saulaxel/sales_point#readme",
+  "devDependencies": {
+    "typescript": "^5.9.2"
+  }
+}

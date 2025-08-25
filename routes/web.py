@@ -21,7 +21,6 @@ def main():
         .where(userdb.ProductVariant.package_content_id.is_null(True))
     )
 
-    headers = ('Producto', 'Precio', 'Existencias')
     for variant in query:
 
         str_variant = f'{variant.product.name}'
@@ -35,15 +34,11 @@ def main():
         if variant.tamano != dbc.NO_TAMANO:
             str_variant += f' {variant.tamano}'
 
-        fvariant = {
-            'str_variant': str_variant,
-            'price': f'${variant.price:.2f}',
-            'existence': variant.existence.id
-        }
-        formatted_variants.append(fvariant)
+        formatted_variants.append(str_variant)
 
 
     return render_template('product_list.html',
-                           headers=headers,
+                           query=query,
                            formatted_variants=formatted_variants,
-                           existence=existence)
+                           existence=existence,
+                           zip=zip)

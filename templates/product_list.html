@@ -14,44 +14,37 @@
     <table class="table table-sm table-primary table-striped">
         <thead>
             <tr>
-                {% for column in headers %}
+                {% for column in ('Producto', 'Precio', 'Existencia', 'Modificar', 'Eliminar') %}
                     <th>{{ column }}</th>
                 {% endfor %}
-
-                <th>Modificar</th>
-                <th>Eliminar</th>
             </tr>
         </thead>
         <tbody>
-            {% for fvariant in formatted_variants %}
+            {% for variant, fvariant in zip(query, formatted_variants) %}
                 <tr>
-                    {% for key, val in fvariant.items() %}
-                        {% if key != 'existence' %}
-                            <td>{{ val }}</td>
-                        {% else %}
-                            {% if val == existence['plenty'] %}
-                                <td>
-                                    <button type="button" class="btn btn-success row-button">
-                                        Suficiente
-                                    </button>
-                                </td>
-                            {% elif val == existence['scarce'] %}
-                                <td>
-                                    <button type="button" class="btn btn-warning row-button">
-                                        Escasa
-                                    </button>
-                                </td>
-                            {% elif val == existence['depleted'] %}
-                                <td>
-                                    <button type="button" class="btn btn-danger row-button">
-                                        Agotada
-                                    </button>
-                                </td>
-                            {% else %}
-                                <td>Error! Existence unknown: {{ val }}</td>
-                            {% endif %}
-                        {% endif %}
-                    {% endfor %}
+                    <td>{{ fvariant }}</td>
+                    <td>{{ variant.price|round(2) }}</td>
+
+                    <!-- Color button based on existence instead of just
+                        printing -->
+                    {% if variant.existence_id == existence['plenty'] %}
+                        {% set btn_class = 'btn-success' %}
+                        {% set btn_msg = 'Suficiente' %}
+                    {% elif variant.existence_id == existence['scarce'] %}
+                        {% set btn_class = 'btn-warning' %}
+                        {% set btn_msg = 'Escaso' %}
+                    {% elif variant.existence_id == existence['depleted'] %}
+                        {% set btn_class = 'btn-danger' %}
+                        {% set btn_msg = 'Agotado' %}
+                    {% endif %}
+                    <td>
+                        <button type="button"
+                                value="{{ variant.id }}"
+                                class="btn {{ btn_class }} row-button
+                                button-existence">
+                            {{ btn_msg }}
+                        </button>
+                    </td>
 
                     <td>
                         <button type="button"
