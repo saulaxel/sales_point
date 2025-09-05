@@ -126,9 +126,9 @@ CREATE TABLE product_variant (
     -- Nevertheless, table 'color' can be used a
     -- suggested catalog
 
-    tamano TEXT NOT NULL DEFAULT 'no_tamano',
-    -- Size. Not necessarily linear, for example '10cm x 10cm', 20grams,
-    -- 'no_tamano' intended for products with only one size
+    variant TEXT NOT NULL DEFAULT 'no_variant',
+    -- '10cm x 10cm', 20grams,
+    -- 'no_variant' intended for products with only one size
 
     price NUMERIC CHECK (price > 0), -- our selling price
 
@@ -144,8 +144,8 @@ CREATE TABLE product_variant (
     -- no repeated variants, I'm not so sure that's viable without including
     -- almost all the columns of the table and yet I'm not sure that should be
     -- disallowed
-    UNIQUE (product_id, brand, presentation_id, package_size, package_content_id, color, tamano)
-    -- Present order: brand, tamano, color, packaging
+    UNIQUE (product_id, brand, presentation_id, package_size, package_content_id, color, variant)
+    -- Present order: brand, variant, color, packaging
 );
 
 CREATE TRIGGER product_variant_prevent_duplicate_with_nulls
@@ -166,7 +166,7 @@ BEGIN
                 OR package_content_id = NEW.package_content_id
               )
               AND color = NEW.color
-              AND tamano = NEW.tamano
+              AND variant = NEW.variant
         )
         THEN
             RAISE(ABORT, 'Duplicate product_variant not allowed (treating NULLs as equal)')
@@ -199,7 +199,7 @@ SELECT
     pv.presentation_id,
     pv.package_size,
     pv.color,
-    pv.tamano,
+    pv.variant,
     pv.price
 FROM
     product p

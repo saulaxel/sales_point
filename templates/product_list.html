@@ -1,10 +1,8 @@
-{% include "page_start.html" %}
+{% extends "base.html" %}
 
+{% block title %} Lista de productos {% endblock %}
 
-<section>
-    <button class="btn btn-primary">Nuevo Producto</button>
-    <button class="btn btn-primary">Eliminar producto(s)</button>
-</section>
+{% block content %}
 
 <section id="product_list">
     Buscar producto:
@@ -64,4 +62,4 @@
     </table>
 </section>
 
-{% include "page_end.html" %}
+{% endblock %}

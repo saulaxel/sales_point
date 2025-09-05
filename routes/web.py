@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template
 
 from models import get_user_models
+import app_session
 import utils.db_constants as dbc
 
 web_bp = Blueprint('web', __name__)
@@ -11,10 +12,12 @@ existence = {
     'depleted': 3,
 }
 
-userdb = get_user_models('exampleuser')
 
 @web_bp.route('/')
 def main():
+    if app_session.is_active():
+        userdb = get_user_models(app_session.username())
+
     formatted_variants = []
     query =(
         userdb.ProductVariant.select()
@@ -42,3 +45,7 @@ def main():
                            formatted_variants=formatted_variants,
                            existence=existence,
                            zip=zip)
+
+@web_bp.route('/add-product')
+def add_product():
+    return render_template('add-product.html')

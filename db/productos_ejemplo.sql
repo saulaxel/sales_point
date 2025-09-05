@@ -24,7 +24,7 @@ INSERT INTO product_variant (
     product_id,
 
     brand,
-    tamano,
+    variant,
     price,
     existence_id
 ) VALUES
@@ -62,7 +62,7 @@ INSERT INTO product_variant (
     product_id,
 
     brand,
-    tamano,
+    variant,
     price
 ) VALUES
     (10 , 4 , 'De la Rosa', 'mediano', 4.00),
@@ -80,7 +80,7 @@ INSERT INTO product_variant (
     package_size,
     package_is_top,
     color,
-    tamano,
+    variant,
     price
 ) VALUES
     (12, 5 , 'B1' , 5 , 10 ,  TRUE , 'white'       , 'half'  , 50.00),
